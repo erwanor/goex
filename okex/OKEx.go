@@ -5,15 +5,17 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/google/uuid"
-	. "github.com/nntaoli-project/goex"
-	"github.com/nntaoli-project/goex/internal/logger"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/google/uuid"
+	. "github.com/nntaoli-project/goex"
+	"github.com/nntaoli-project/goex/internal/logger"
 )
 
 const baseUrl = "https://www.okex.com"
+const baseUrlWs = "wss://real.okex.com:8443/ws/v3"
 
 type OKEx struct {
 	config          *APIConfig
@@ -31,6 +33,11 @@ func NewOKEx(config *APIConfig) *OKEx {
 	if config.Endpoint == "" {
 		config.Endpoint = baseUrl
 	}
+
+	if config.WsEndpoint == "" {
+		config.WsEndpoint = baseUrlWs
+	}
+
 	okex := &OKEx{config: config}
 	okex.OKExSpot = &OKExSpot{okex}
 	okex.OKExFuture = &OKExFuture{OKEx: okex, Locker: new(sync.Mutex)}

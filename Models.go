@@ -115,6 +115,7 @@ type Depth struct {
 type APIConfig struct {
 	HttpClient    *http.Client
 	Endpoint      string
+	WsEndpoint    string
 	ApiKey        string
 	ApiSecretKey  string
 	ApiPassphrase string //for okex.com v3 api
