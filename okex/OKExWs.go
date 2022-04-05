@@ -3,11 +3,12 @@ package okex
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/nntaoli-project/goex/internal/logger"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/nntaoli-project/goex/internal/logger"
 
 	. "github.com/nntaoli-project/goex"
 )
@@ -36,7 +37,7 @@ func NewOKExV3Ws(base *OKEx, handle func(channel string, data json.RawMessage) e
 		respHandle: handle,
 	}
 	okV3Ws.WsBuilder = NewWsBuilder().
-		WsUrl("wss://real.okex.com:8443/ws/v3").
+		WsUrl(base.config.Endpoint).
 		ReconnectInterval(time.Second).
 		AutoReconnect().
 		Heartbeat(func() []byte { return []byte("ping") }, 28*time.Second).
